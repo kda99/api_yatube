@@ -1,4 +1,5 @@
-from django.urls import path
-
-urlpatterns = [
-]
+"""a."""
+# from django.urls import path
+#
+# urlpatterns = [
+# ]
