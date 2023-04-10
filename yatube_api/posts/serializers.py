@@ -42,7 +42,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     """aaSSaS."""
-
+    author = serializers.StringRelatedField(read_only=True)
     comments = CommentSerializer(many=True, required=False)
 
     class Meta:
