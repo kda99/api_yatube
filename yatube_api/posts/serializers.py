@@ -67,7 +67,3 @@ class PostSerializer(serializers.ModelSerializer):
                 CommentPost.objects.create(
                     comment=current_comment, post=post)
             return post
-
-
-class PostListSerializer():
-    pass

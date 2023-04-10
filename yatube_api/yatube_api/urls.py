@@ -13,7 +13,6 @@ router.register(r"api/v1/posts/(?P<post_id>\d+)/comments", CommentViewSet)
 #, basename="comments"
 router.register(r'api/v1/posts', PostViewSet)
 router.register(r'api/v1/groups', GroupViewSet)
-router.register(r'api/v1/comments', CommentViewSet)
 router.register(r'api/v1/users', UserViewSet)
 
 urlpatterns = [

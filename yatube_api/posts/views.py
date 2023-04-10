@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from .models import Comment, Post, User, Group
 
 from .serializers import CommentSerializer, PostSerializer, UserSerializer,\
-    GroupSerializer, PostListSerializer
+    GroupSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -16,10 +16,11 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        if serializer.instance.author != self.request.user:
-            raise PermissionDenied('Создание контента запрещено!')
-        """Create a new post."""
-        serializer.save(author=self.request.user)
+        if not isinstance(serializer.instance, type(None)):
+            if serializer.instance.author != self.request.user:
+                raise PermissionDenied('Создание контента запрещено!')
+            """Create a new post."""
+            serializer.save(author=self.request.user)
 
     def perform_update(self, serializer):
         if serializer.instance.author != self.request.user:
@@ -62,6 +63,10 @@ class CommentViewSet(viewsets.ModelViewSet):
         """Create a new post."""
         post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
         serializer.save(author=self.request.user, post = post)
+
+    def get_queryset(self):
+        post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
+        return post.comments.all()
 
 
 class GroupViewSet(viewsets.ModelViewSet):
