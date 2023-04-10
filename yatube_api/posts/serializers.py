@@ -31,13 +31,13 @@ class CommentSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     """ASSAsaS."""
 
-    group_name = serializers.CharField(source='title')
+    # group_name = serializers.CharField(source='title')
 
     class Meta:
         """Serializer for groups."""
 
         model = Group
-        fields = ('id', 'group_name', 'slug', 'description')
+        fields = ('id', 'title', 'slug', 'description')
 
 
 class PostSerializer(serializers.ModelSerializer):
