@@ -3,8 +3,8 @@ from rest_framework import viewsets
 
 from yatube_api.posts.models import Comment, Post, User, Group
 
-from yatube_api.posts.serializers import CommentSerializer, PostSerializer, UserSerializer,\
-    GroupSerializer
+from yatube_api.posts.serializers import CommentSerializer, PostSerializer,\
+    UserSerializer, GroupSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):

@@ -20,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     """SASDSAD."""
     author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         """Serializer for comments."""
 
@@ -51,7 +52,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'text', 'pub_date', 'author', 'comments', 'image',
                   'group')
-
 
     def create(self, validated_data):
         """sdadasdasd."""
