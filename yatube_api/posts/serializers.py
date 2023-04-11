@@ -32,8 +32,6 @@ class CommentSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     """ASSAsaS."""
 
-    # group_name = serializers.CharField(source='title')
-
     class Meta:
         """Serializer for groups."""
 
@@ -50,8 +48,8 @@ class PostSerializer(serializers.ModelSerializer):
         """saassad."""
 
         model = Post
-        fields = ('id', 'text', 'pub_date', 'author', 'comments', 'image',
-                  'group')
+        fields = ('id', 'text', 'pub_date', 'author', 'image',
+                  'group', 'comments')
 
     def create(self, validated_data):
         """sdadasdasd."""

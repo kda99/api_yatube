@@ -17,11 +17,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        if not isinstance(serializer.instance, type(None)):
-            if serializer.instance.author != self.request.user:
-                raise PermissionDenied('Создание контента запрещено!')
-            """Create a new post."""
-            serializer.save(author=self.request.user)
+        serializer.save(author=self.request.user)
 
     def perform_update(self, serializer):
         if serializer.instance.author != self.request.user:
