@@ -4,7 +4,6 @@ from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 
 from .models import Comment, Post, User, Group
-
 from .serializers import CommentSerializer, PostSerializer, UserSerializer,\
     GroupSerializer
 
@@ -39,8 +38,13 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-    def perform_create(self, serializer):
+
+    def get_post(self, ):
         post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
+        return post
+
+    def perform_create(self, serializer):
+        post = self.get_post()
         serializer.save(author=self.request.user,
                         post=post)
 
@@ -55,7 +59,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         instance.delete()
 
     def get_queryset(self):
-        post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
+        post = self.get_post()
         return post.comments.all()
 
 
