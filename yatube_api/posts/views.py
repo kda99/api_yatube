@@ -16,14 +16,24 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+
+    def is_author(self, item):
+        if isinstance(item, PostSerializer):
+            if item.instance.author!= self.request.user:
+                raise PermissionDenied('Изменение чужого контента запрещено!')
+            return True
+        elif isinstance(item, Post):
+            if item.author!= self.request.user:
+                raise PermissionDenied('Изменение чужого контента запрещено!')
+            return True
+        return False
+
     def perform_update(self, serializer):
-        if serializer.instance.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
+        self.is_author(serializer)
         super(PostViewSet, self).perform_update(serializer)
 
     def perform_destroy(self, instance):
-        if instance.author != self.request.user:
-            raise PermissionDenied('Изменение чужого контента запрещено!')
+        self.is_author(instance)
         instance.delete()
 
 
