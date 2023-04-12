@@ -3,9 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 
-from posts.models import Comment, Post, User, Group
-from .serializers import CommentSerializer, PostSerializer, UserSerializer,\
-    GroupSerializer
+from posts.models import Comment, Post, Group
+from .serializers import CommentSerializer, PostSerializer, GroupSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -16,14 +15,13 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-
     def is_author(self, item):
         if isinstance(item, PostSerializer):
-            if item.instance.author!= self.request.user:
+            if item.instance.author != self.request.user:
                 raise PermissionDenied('Изменение чужого контента запрещено!')
             return True
         elif isinstance(item, Post):
-            if item.author!= self.request.user:
+            if item.author != self.request.user:
                 raise PermissionDenied('Изменение чужого контента запрещено!')
             return True
         return False
@@ -37,17 +35,10 @@ class PostViewSet(viewsets.ModelViewSet):
         instance.delete()
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class CommentViewSet(viewsets.ModelViewSet):
 
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-
 
     def get_post(self, ):
         post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
