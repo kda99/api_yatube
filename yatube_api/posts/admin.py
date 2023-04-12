@@ -1,11 +1,9 @@
-"""Run administrative tasks."""
 from django.contrib import admin
 
 from .models import Comment, Group, Post
 
 
 class PostAdmin(admin.ModelAdmin):
-    """Admin class for Post model."""
 
     list_display = ('pk', 'text', 'pub_date', 'author')
     search_fields = ('text',)

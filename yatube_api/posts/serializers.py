@@ -1,16 +1,13 @@
-"""serializers.py."""
 from rest_framework import serializers
 
 from .models import Comment, CommentPost, Post, User, Group
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """Serializer for User model."""
 
     posts = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
-        """Serializer for User model."""
 
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'posts')
@@ -18,11 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    """SASDSAD."""
     author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
-        """Serializer for comments."""
 
         model = Comment
         fields = ('id', 'text', 'author', 'post', 'created')
@@ -30,29 +25,24 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    """ASSAsaS."""
 
     class Meta:
-        """Serializer for groups."""
 
         model = Group
         fields = ('id', 'title', 'slug', 'description')
 
 
 class PostSerializer(serializers.ModelSerializer):
-    """aaSSaS."""
     author = serializers.StringRelatedField(read_only=True)
     comments = CommentSerializer(many=True, required=False)
 
     class Meta:
-        """saassad."""
 
         model = Post
         fields = ('id', 'text', 'pub_date', 'author', 'image',
                   'group', 'comments')
 
     def create(self, validated_data):
-        """sdadasdasd."""
         if 'comments' not in self.initial_data:
             post = Post.objects.create(**validated_data)
             return post
