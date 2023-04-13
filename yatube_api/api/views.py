@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 
-from posts.models import Comment, Post, Group
+from posts.models import Post, Group
 from .serializers import CommentSerializer, PostSerializer, GroupSerializer
 
 
@@ -37,7 +37,6 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
 
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
     def get_post(self, ):
